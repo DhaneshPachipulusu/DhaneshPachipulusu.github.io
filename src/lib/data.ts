@@ -597,6 +597,137 @@ export const architectureCards: ArchitectureCard[] = [
   },
 ];
 
+/* Clickable architecture node details (keyed by node label). */
+export interface NodeDetail {
+  purpose: string;
+  config: string;
+  implementation: string;
+  tech: string[];
+}
+
+export const nodeDetails: Record<string, NodeDetail> = {
+  CloudFront: {
+    purpose: "Global CDN + TLS termination for low-latency delivery.",
+    config: "Distribution in front of the origin, HTTPS, caching of static assets.",
+    implementation: "Fronted the app with CloudFront for SSL and edge caching.",
+    tech: ["AWS CloudFront", "SSL/TLS", "CDN"],
+  },
+  Nginx: {
+    purpose: "Reverse proxy and SSL termination in front of the app.",
+    config: "Upstream to FastAPI, TLS certs, gzip, security headers, /healthz.",
+    implementation: "Configured Nginx as the edge reverse proxy with SSL and health checks.",
+    tech: ["Nginx", "SSL", "Reverse proxy"],
+  },
+  FastAPI: {
+    purpose: "Serve the REST API and orchestrate AI calls.",
+    config: "Routers, Pydantic schemas, CORS, /health and /metrics endpoints.",
+    implementation: "Built the interview/scoring API with routers, services and persistence.",
+    tech: ["FastAPI", "Python", "Pydantic", "Uvicorn"],
+  },
+  MongoDB: {
+    purpose: "Persist documents for sessions and reports (where used).",
+    config: "Document collections for app state.",
+    implementation: "Used a document store for session/report persistence in services that need it.",
+    tech: ["Document DB"],
+  },
+  Ingress: {
+    purpose: "Route external traffic into the cluster.",
+    config: "Nginx ingress controller, host rules, TLS.",
+    implementation: "Defined ingress rules routing to the frontend/backend services.",
+    tech: ["Kubernetes Ingress", "Nginx"],
+  },
+  "Frontend Pods": {
+    purpose: "Run replicated stateless frontend containers.",
+    config: "Deployment with replicas, readiness/liveness probes, resource limits.",
+    implementation: "Deployed the Next.js frontend as a replicated, self-healing Deployment.",
+    tech: ["Kubernetes", "Next.js", "Probes"],
+  },
+  "Backend Pods": {
+    purpose: "Run replicated API containers, scaled by load.",
+    config: "Deployment + HPA, probes, ConfigMap/Secret env, resource requests/limits.",
+    implementation: "Deployed the FastAPI backend with an HPA for horizontal autoscaling.",
+    tech: ["Kubernetes", "HPA", "FastAPI"],
+  },
+  Database: {
+    purpose: "Durable storage for application data.",
+    config: "Persistent volume / managed store, backups.",
+    implementation: "Backed services with a persistent data layer.",
+    tech: ["Persistent storage"],
+  },
+  "GitHub Actions": {
+    purpose: "Automate build → test → scan → deploy on every push.",
+    config: "Lint/test/build jobs, buildx cache, Trivy scan, GHCR push, Pages deploy.",
+    implementation: "Authored the CI/CD pipeline that builds images and ships them.",
+    tech: ["GitHub Actions", "Docker Buildx", "Trivy"],
+  },
+  "Docker Hub": {
+    purpose: "Registry for versioned container images.",
+    config: "Tagged images (sha, latest, semver) pushed from CI.",
+    implementation: "Pushed multi-stage images to a registry (GHCR) from the pipeline.",
+    tech: ["Container registry", "Docker"],
+  },
+  Kubernetes: {
+    purpose: "Run and roll out the containerized workloads.",
+    config: "kustomize manifests + Helm chart, HPA, probes, secrets.",
+    implementation: "Deployed via kustomize and a Helm chart with zero-downtime rollouts.",
+    tech: ["Kubernetes", "Helm", "kustomize"],
+  },
+  Production: {
+    purpose: "The live environment serving users.",
+    config: "Rolling updates, health-gated rollout, monitoring + alerts.",
+    implementation: "Promoted images to production with health checks and observability.",
+    tech: ["Kubernetes", "Prometheus", "Grafana"],
+  },
+  API: {
+    purpose: "Entry point that receives the user query.",
+    config: "FastAPI route handling auth, validation and orchestration.",
+    implementation: "Built the API layer that drives the RAG flow.",
+    tech: ["FastAPI", "Python"],
+  },
+  "Embedding Model": {
+    purpose: "Turn text into vectors for semantic search.",
+    config: "Embedding model invoked on ingest and at query time.",
+    implementation: "Embedded documents and queries to enable similarity search.",
+    tech: ["Embeddings", "AI"],
+  },
+  Qdrant: {
+    purpose: "Vector database for similarity search / RAG.",
+    config: "Namespaced collections, top-k retrieval, re-ranking.",
+    implementation: "Indexed chunks in Qdrant and retrieved grounded context.",
+    tech: ["Qdrant", "Vector DB", "RAG"],
+  },
+  LLM: {
+    purpose: "Generate the grounded answer from retrieved context.",
+    config: "Prompt with retrieved context, guardrails, provider switch.",
+    implementation: "Composed prompts with retrieved context for grounded responses.",
+    tech: ["OpenAI", "Gemini", "Prompting"],
+  },
+  Application: {
+    purpose: "The service exposing metrics to be observed.",
+    config: "Instrumented with a /metrics endpoint.",
+    implementation: "Exposed Prometheus metrics from the FastAPI app.",
+    tech: ["FastAPI", "Instrumentator"],
+  },
+  Prometheus: {
+    purpose: "Scrape and store time-series metrics.",
+    config: "Scrape targets on /metrics, alert rules on SLOs.",
+    implementation: "Scraped service metrics and defined alerting rules.",
+    tech: ["Prometheus", "PromQL"],
+  },
+  Grafana: {
+    purpose: "Visualize metrics and alerts.",
+    config: "Provisioned datasource + dashboards from Prometheus.",
+    implementation: "Built dashboards for service health and request metrics.",
+    tech: ["Grafana", "Dashboards"],
+  },
+  Dashboards: {
+    purpose: "Operational views + alerting on breaches.",
+    config: "SLO panels, alert routing on threshold breach.",
+    implementation: "Surfaced health and alerted on SLO breaches.",
+    tech: ["Grafana", "Alerting"],
+  },
+};
+
 /* ------------------------------------------------------------------ */
 /* Skills                                                             */
 /* ------------------------------------------------------------------ */

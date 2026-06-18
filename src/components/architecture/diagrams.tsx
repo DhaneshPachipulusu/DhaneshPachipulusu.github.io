@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import {
   architectureCards,
+  nodeDetails,
   type DiagramKind,
   type FlowNode,
 } from "@/lib/data";
@@ -19,7 +20,13 @@ const TOP = 18;
 const NX = (W - NODE_W) / 2;
 const CX = W / 2;
 
-function VerticalFlow({ flow }: { flow: FlowNode[] }) {
+function VerticalFlow({
+  flow,
+  onNodeClick,
+}: {
+  flow: FlowNode[];
+  onNodeClick?: (label: string) => void;
+}) {
   const n = flow.length;
   const height = TOP * 2 + n * NODE_H + (n - 1) * GAP;
   const nodeY = (i: number) => TOP + i * (NODE_H + GAP);
@@ -108,12 +115,20 @@ function VerticalFlow({ flow }: { flow: FlowNode[] }) {
       {/* Nodes */}
       {flow.map((node, i) => {
         const y = nodeY(i);
+        const clickable = !!nodeDetails[node.label];
         return (
           <motion.g
             key={`node-${i}`}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.15 + i * 0.12 }}
+            onClick={clickable ? () => onNodeClick?.(node.label) : undefined}
+            whileHover={clickable ? { scale: 1.015 } : undefined}
+            style={{
+              cursor: clickable ? "pointer" : "default",
+              transformBox: "fill-box",
+              transformOrigin: "center",
+            }}
           >
             <rect
               x={NX}
@@ -123,9 +138,24 @@ function VerticalFlow({ flow }: { flow: FlowNode[] }) {
               rx={14}
               fill="url(#vfNode)"
               stroke={node.accent}
-              strokeOpacity={0.45}
-              strokeWidth={1.2}
+              strokeOpacity={clickable ? 0.6 : 0.45}
+              strokeWidth={clickable ? 1.4 : 1.2}
             />
+            {clickable && (
+              <g>
+                <circle cx={NX + NODE_W - 16} cy={y + 16} r={8} fill={node.accent} fillOpacity={0.16} />
+                <text
+                  x={NX + NODE_W - 16}
+                  y={y + 19}
+                  textAnchor="middle"
+                  fill={node.accent}
+                  fontSize="11"
+                  fontWeight="700"
+                >
+                  +
+                </text>
+              </g>
+            )}
             {/* left accent bar */}
             <rect x={NX} y={y} width={4} height={NODE_H} rx={2} fill={node.accent} />
             {/* index badge */}
@@ -178,8 +208,14 @@ function VerticalFlow({ flow }: { flow: FlowNode[] }) {
   );
 }
 
-export function ArchitectureDiagram({ kind }: { kind: DiagramKind }) {
+export function ArchitectureDiagram({
+  kind,
+  onNodeClick,
+}: {
+  kind: DiagramKind;
+  onNodeClick?: (label: string) => void;
+}) {
   const card = architectureCards.find((c) => c.id === kind);
   if (!card) return null;
-  return <VerticalFlow flow={card.flow} />;
+  return <VerticalFlow flow={card.flow} onNodeClick={onNodeClick} />;
 }

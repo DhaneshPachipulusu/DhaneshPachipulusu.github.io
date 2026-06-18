@@ -2,14 +2,17 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
+import { X, MousePointerClick } from "lucide-react";
 import { Section } from "./ui/Section";
 import { SectionHeading } from "./ui/SectionHeading";
-import { architectureCards } from "@/lib/data";
+import { architectureCards, nodeDetails } from "@/lib/data";
 import { ArchitectureDiagram } from "./architecture/diagrams";
 
 export function Architecture() {
   const [active, setActive] = useState(0);
+  const [node, setNode] = useState<string | null>(null);
   const current = architectureCards[active];
+  const detail = node ? nodeDetails[node] : null;
 
   return (
     <Section id="architecture">
@@ -78,8 +81,9 @@ export function Architecture() {
               <current.icon className="h-5 w-5 text-accent" />
               <span className="font-medium text-fg">{current.title}</span>
             </div>
-            <span className="hidden font-mono text-xs text-faint sm:inline">
-              live data flow
+            <span className="hidden items-center gap-1.5 font-mono text-xs text-faint sm:inline-flex">
+              <MousePointerClick className="h-3.5 w-3.5 text-accent" />
+              click a <span className="text-accent">+</span> node for details
             </span>
           </div>
 
@@ -93,7 +97,7 @@ export function Architecture() {
                 transition={{ duration: 0.35 }}
                 className="flex h-full w-full items-center justify-center"
               >
-                <ArchitectureDiagram kind={current.id} />
+                <ArchitectureDiagram kind={current.id} onNodeClick={setNode} />
               </motion.div>
             </AnimatePresence>
           </div>
@@ -110,6 +114,71 @@ export function Architecture() {
           </div>
         </div>
       </div>
+
+      {/* node detail modal */}
+      <AnimatePresence>
+        {detail && node && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setNode(null)}
+            className="fixed inset-0 z-[80] flex items-center justify-center bg-bg/80 p-4 backdrop-blur-md"
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 24, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 24, scale: 0.97 }}
+              transition={{ duration: 0.25 }}
+              onClick={(e) => e.stopPropagation()}
+              className="glass relative w-full max-w-md overflow-hidden rounded-2xl"
+            >
+              <button
+                onClick={() => setNode(null)}
+                aria-label="Close"
+                className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface text-muted transition-colors hover:text-fg"
+              >
+                <X className="h-4 w-4" />
+              </button>
+              <div className="border-b border-border p-6">
+                <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
+                  component
+                </span>
+                <h3 className="mt-1 text-2xl font-bold text-fg">{node}</h3>
+              </div>
+              <div className="space-y-5 p-6">
+                {[
+                  { label: "Purpose", value: detail.purpose },
+                  { label: "Configuration", value: detail.config },
+                  { label: "My implementation", value: detail.implementation },
+                ].map((row) => (
+                  <div key={row.label}>
+                    <p className="mb-1.5 font-mono text-[11px] uppercase tracking-wider text-faint">
+                      {row.label}
+                    </p>
+                    <p className="text-sm leading-relaxed text-muted">{row.value}</p>
+                  </div>
+                ))}
+                <div>
+                  <p className="mb-2 font-mono text-[11px] uppercase tracking-wider text-faint">
+                    Technologies
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {detail.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="rounded-lg border border-border bg-surface-2/60 px-3 py-1 font-mono text-xs text-muted"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </Section>
   );
 }

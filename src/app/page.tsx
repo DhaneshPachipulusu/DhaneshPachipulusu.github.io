@@ -14,6 +14,7 @@ import { Experience } from "@/components/Experience";
 import { Architecture } from "@/components/Architecture";
 import { Projects } from "@/components/Projects";
 import { Skills } from "@/components/Skills";
+import { TechStack } from "@/components/TechStack";
 import { EngineeringPrinciples } from "@/components/EngineeringPrinciples";
 import { EngineeringMetrics } from "@/components/EngineeringMetrics";
 import { Achievements } from "@/components/Achievements";
@@ -42,6 +43,7 @@ export default function Home() {
         <Architecture />
         <Projects />
         <Skills />
+        <TechStack />
         <EngineeringPrinciples />
         <EngineeringMetrics />
         <Achievements />
