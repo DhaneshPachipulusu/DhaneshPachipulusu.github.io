@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dhaneswara Rao Pachipulusu — Portfolio
 
-## Getting Started
+A premium, recruiter-focused engineering portfolio positioning Dhaneswara Rao Pachipulusu as a
+**DevOps Engineer** (with Backend & AI Applications engineering as supporting capabilities).
 
-First, run the development server:
+Built with **Next.js 16 (App Router)**, **TypeScript**, **Tailwind CSS v4**, and
+**Framer Motion**. Dark-theme-first, fully responsive, SEO-optimized, and
+deployable to Vercel with no changes.
+
+## Sections
+
+Hero (animated terminal + stats) · Tech marquee · About · Experience timeline ·
+Featured Projects (filterable, case-study modals) · **Architecture Showcase**
+(interactive animated SVG diagrams: AWS, Kubernetes, CI/CD, RAG, Observability) ·
+Skills · Achievements · Modern Engineering Workflow · Contact · Footer.
+
+## Develop
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build
+npm run start    # serve the production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Customize
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+All content lives in [`src/lib/data.ts`](src/lib/data.ts). Update these before deploying:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **`profile.socials.linkedin`** — replace the placeholder with your real LinkedIn URL.
+- **`profile.siteUrl`** — set to your deployed domain (used for SEO, OG, sitemap, JSON-LD).
+- **`public/resume.pdf`** — replace the placeholder PDF with your real resume.
+- Email / GitHub are already wired (`nainovate@gmail.com`, `DhaneshPachipulusu`).
 
-## Learn More
+Design tokens (colors, fonts, animations) live in
+[`src/app/globals.css`](src/app/globals.css) under the Tailwind v4 `@theme` block.
 
-To learn more about Next.js, take a look at the following resources:
+## SEO
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Metadata, Open Graph, and Twitter cards are configured in
+[`src/app/layout.tsx`](src/app/layout.tsx), with a JSON-LD `Person` schema, a
+dynamically generated OG image ([`opengraph-image.tsx`](src/app/opengraph-image.tsx)),
+[`robots.ts`](src/app/robots.ts), and [`sitemap.ts`](src/app/sitemap.ts).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Push to GitHub and import into [Vercel](https://vercel.com/new) — zero config.
