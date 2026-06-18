@@ -1,0 +1,47 @@
+{
+  "name": "Dhanesh AI",
+  "intro": "Hi — I'm Dhanesh AI. Ask me about Dhaneswara's DevOps, backend and AI work, or tap a question below.",
+  "qa": [
+    {
+      "q": "Who is Dhanesh?",
+      "keywords": ["who", "about", "yourself", "intro", "name"],
+      "a": "Dhaneswara Rao Pachipulusu is a DevOps Engineer — also Backend and AI Applications — currently Backend & DevOps Engineer at Nainovate AI. He designs, deploys, scales, monitors and secures production systems on AWS and Kubernetes, and holds a TCS Digital System Engineer offer."
+    },
+    {
+      "q": "What projects has he built?",
+      "keywords": ["project", "projects", "built", "work", "portfolio"],
+      "a": "Three featured projects: (1) AI Interview Bot — FastAPI app shipped with a full Docker → Kubernetes CI/CD pipeline; (2) Jarvis — an offline, wake-word voice assistant for Windows powered by Google Gemini; (3) AI Customer Support Platform — a multi-tenant RAG platform built at Nainovate AI. Open the Projects section for full case studies.",
+      "action": "goto:#projects"
+    },
+    {
+      "q": "Explain the AI Interview Bot.",
+      "keywords": ["interview", "ai-bot", "ai bot", "bot", "resume"],
+      "a": "An automated interview platform: it scores resumes, runs adaptive AI interviews and generates structured candidate reports. Backend in FastAPI with Google Gemini + OpenAI, a SQLite + JSON store, and a Next.js UI. It's packaged for production — multi-stage Docker images, GitHub Actions CI (build → test → Trivy scan → GHCR), Kubernetes manifests + a Helm chart, Terraform, and Prometheus/Grafana. The source is public on GitHub.",
+      "action": "goto:#projects"
+    },
+    {
+      "q": "Explain his DevOps experience.",
+      "keywords": ["devops", "ci/cd", "cicd", "pipeline", "docker", "experience"],
+      "a": "DevOps is his core strength. Docker & Kubernetes, GitHub Actions & Jenkins for CI/CD, Nginx, Linux, AWS (EC2, S3, CloudFront, Route53, VPC) plus an Oracle Cloud ARM instance, with Prometheus + Grafana observability and infrastructure-as-code via Terraform. He takes products from localhost to a reproducible, observable production deployment.",
+      "action": "goto:#architecture"
+    },
+    {
+      "q": "Show cloud architecture.",
+      "keywords": ["cloud", "aws", "oracle", "architecture", "infra", "infrastructure"],
+      "a": "The cloud flow: User → CloudFront → Nginx → FastAPI → database, fronted by SSL and Route53 DNS. The Architecture section has animated, interactive diagrams for AWS, CI/CD and observability — scrolling you there now.",
+      "action": "goto:#architecture"
+    },
+    {
+      "q": "Show Kubernetes experience.",
+      "keywords": ["kubernetes", "k8s", "helm", "pods", "hpa"],
+      "a": "Kubernetes flow: Ingress → frontend pods → backend pods → database, scaled by an HPA and packaged with a Helm chart, with metrics scraped by Prometheus. See the Kubernetes diagram in the Architecture section.",
+      "action": "goto:#architecture"
+    },
+    {
+      "q": "How do I contact him?",
+      "keywords": ["contact", "email", "hire", "reach", "linkedin", "github"],
+      "a": "Email nainovate@gmail.com, GitHub @DhaneshPachipulusu, or use the Contact section. He's open to DevOps, Backend and AI Applications roles.",
+      "action": "goto:#contact"
+    }
+  ]
+}

@@ -15,10 +15,12 @@ import { Architecture } from "@/components/Architecture";
 import { Projects } from "@/components/Projects";
 import { Skills } from "@/components/Skills";
 import { EngineeringPrinciples } from "@/components/EngineeringPrinciples";
+import { EngineeringMetrics } from "@/components/EngineeringMetrics";
 import { Achievements } from "@/components/Achievements";
 import { ModernWorkflow } from "@/components/Workflow";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
+import { Assistant } from "@/components/Assistant";
 
 export default function Home() {
   return (
@@ -41,12 +43,14 @@ export default function Home() {
         <Projects />
         <Skills />
         <EngineeringPrinciples />
+        <EngineeringMetrics />
         <Achievements />
         <ModernWorkflow />
         <Contact />
       </main>
 
       <Footer />
+      <Assistant />
     </GitHubProvider>
   );
 }

@@ -1,0 +1,11 @@
+{
+  "_comment": "Edit these values freely — they drive the Engineering Metrics counters. Keep them honest.",
+  "metrics": [
+    { "label": "Production-style Deployments", "value": 10, "suffix": "+", "icon": "rocket" },
+    { "label": "Cloud Platforms Used", "value": 2, "suffix": "", "icon": "cloud" },
+    { "label": "CI/CD Pipelines Built", "value": 4, "suffix": "+", "icon": "workflow" },
+    { "label": "Containerized Applications", "value": 6, "suffix": "+", "icon": "container" },
+    { "label": "AI Applications Built", "value": 3, "suffix": "+", "icon": "bot" },
+    { "label": "Monitoring Systems", "value": 2, "suffix": "", "icon": "gauge" }
+  ]
+}

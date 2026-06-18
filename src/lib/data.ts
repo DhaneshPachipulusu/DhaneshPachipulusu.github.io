@@ -307,13 +307,19 @@ export interface Project {
   challenges: string;
   solution: string;
   deployment: string[];
+  /** Hosting / infrastructure details (honest current state). */
+  infrastructure: string[];
   results: string[];
   metrics: { label: string; value: string }[];
   /** Optional links — only rendered when present. */
   repo?: string;
   demo?: string;
+  /** Architecture diagram id to deep-link into the Architecture section. */
+  archHash?: string;
   /** Honest status badge, e.g. private/company or not-yet-deployed. */
   status?: { label: string; tone: "private" | "wip" | "live" | "source" };
+  /** Honest hosting status line shown in the case study. */
+  hosting?: { label: string; tone: "infra" | "live" | "local" | "private" };
 }
 
 export const projects: Project[] = [
@@ -352,6 +358,12 @@ export const projects: Project[] = [
       "Terraform for infrastructure as code; Nginx + SSL at the edge",
       "Prometheus scraping /metrics, visualized in Grafana",
     ],
+    infrastructure: [
+      "Oracle Cloud ARM instance (24 GB RAM) — provisioned",
+      "Docker + docker compose for the full stack",
+      "Nginx reverse proxy + SSL termination",
+      "Kubernetes (kustomize + Helm) manifests ready",
+    ],
     results: [
       "Runs fully containerized — backend & frontend verified healthy",
       "One-command local stack via docker compose",
@@ -363,7 +375,9 @@ export const projects: Project[] = [
       { label: "Monitoring", value: "Prom + Grafana" },
     ],
     repo: "https://github.com/DhaneshPachipulusu/ai-bot",
+    archHash: "cicd",
     status: { label: "Public · source on GitHub", tone: "source" },
+    hosting: { label: "Infra ready · Oracle Cloud ARM · not yet public", tone: "infra" },
   },
   {
     slug: "jarvis-ai-assistant",
@@ -397,6 +411,11 @@ export const projects: Project[] = [
       "Runs as a local app on Windows",
       "Modular skill registry for adding new commands",
     ],
+    infrastructure: [
+      "Local-first — runs on the user's Windows machine",
+      "Python virtual environment, no server required",
+      "Offline wake-word; only LLM calls leave the device",
+    ],
     results: [
       "Hands-free control of common Windows workflows",
       "Extensible skill/command architecture",
@@ -409,6 +428,7 @@ export const projects: Project[] = [
     ],
     repo: "https://github.com/DhaneshPachipulusu/Jarvis",
     status: { label: "Public · source on GitHub", tone: "source" },
+    hosting: { label: "Local desktop app · no hosting needed", tone: "local" },
   },
   {
     slug: "ai-customer-support",
@@ -444,6 +464,12 @@ export const projects: Project[] = [
       "CI/CD pipeline with automated rollout and rollback",
       "Prometheus + Grafana for monitoring and alerting",
     ],
+    infrastructure: [
+      "Kubernetes-orchestrated services (per-tenant isolation)",
+      "Redis caching layer for hot retrievals",
+      "Prometheus + Grafana observability stack",
+      "Built and operated within Nainovate AI infrastructure",
+    ],
     results: [
       "Deflected repetitive tickets with grounded answers",
       "Faster agent resolution via the AI copilot",
@@ -454,7 +480,9 @@ export const projects: Project[] = [
       { label: "Scaling", value: "Horizontal" },
       { label: "Observability", value: "Full-stack" },
     ],
+    archHash: "kubernetes",
     status: { label: "Private · built at Nainovate AI", tone: "private" },
+    hosting: { label: "Private · runs on Nainovate AI infrastructure", tone: "private" },
   },
 ];
 

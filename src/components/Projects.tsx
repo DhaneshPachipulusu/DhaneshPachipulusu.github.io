@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, X, ExternalLink, Lock } from "lucide-react";
+import { ArrowUpRight, ArrowRight, X, ExternalLink, Lock, FileText, Cpu } from "lucide-react";
 import { useState } from "react";
 import { Section } from "./ui/Section";
 import { SectionHeading } from "./ui/SectionHeading";
@@ -229,90 +229,41 @@ function ProjectModal({
             </div>
 
             <div className="space-y-7 p-7">
+              {/* 1 — Problem */}
               <Block label="Problem">
-                <p className="text-sm leading-relaxed text-muted">
-                  {project.problem}
-                </p>
+                <p className="text-sm leading-relaxed text-muted">{project.problem}</p>
               </Block>
 
-              <div className="grid gap-7 sm:grid-cols-2">
-                <Block label="Features">
-                  <ul className="space-y-1.5">
-                    {project.features.map((f) => (
-                      <li key={f} className="flex gap-2 text-sm text-muted">
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                </Block>
-                <Block label="Architecture">
-                  <ul className="space-y-1.5">
-                    {project.architecture.map((a) => (
-                      <li key={a} className="flex gap-2 text-sm text-muted">
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-2" />
-                        {a}
-                      </li>
-                    ))}
-                  </ul>
-                </Block>
-              </div>
-
-              <div className="grid gap-7 sm:grid-cols-2">
-                <Block label="Challenges">
-                  <p className="text-sm leading-relaxed text-muted">
-                    {project.challenges}
-                  </p>
-                </Block>
-                <Block label="Solution">
-                  <p className="text-sm leading-relaxed text-muted">
-                    {project.solution}
-                  </p>
-                </Block>
-              </div>
-
-              <Block label="Deployment Strategy">
-                <ul className="space-y-1.5">
-                  {project.deployment.map((d) => (
-                    <li key={d} className="flex gap-2 text-sm text-muted">
-                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald" />
-                      {d}
+              {/* 2 — Solution */}
+              <Block label="Solution">
+                <p className="text-sm leading-relaxed text-muted">{project.solution}</p>
+                <ul className="mt-3 grid gap-1.5 sm:grid-cols-2">
+                  {project.features.map((f) => (
+                    <li key={f} className="flex gap-2 text-sm text-muted">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                      {f}
                     </li>
                   ))}
                 </ul>
               </Block>
 
-              <Block label="Metrics">
-                <div className="grid gap-3 sm:grid-cols-3">
-                  {project.metrics.map((m) => (
-                    <div
-                      key={m.label}
-                      className="rounded-xl border border-border bg-surface-2/50 p-4 text-center"
-                    >
-                      <p className="text-xl font-bold text-gradient-accent">
-                        {m.value}
-                      </p>
-                      <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-faint">
-                        {m.label}
-                      </p>
-                    </div>
+              {/* 3 — Architecture flow */}
+              <Block label="Architecture">
+                <div className="flex flex-wrap items-center gap-2">
+                  {project.architecture.map((a, i) => (
+                    <span key={a} className="flex items-center gap-2">
+                      <span className="rounded-lg border border-border bg-surface-2/60 px-3 py-1.5 text-xs text-muted">
+                        {a}
+                      </span>
+                      {i < project.architecture.length - 1 && (
+                        <ArrowRight className="h-3.5 w-3.5 shrink-0 text-faint" />
+                      )}
+                    </span>
                   ))}
                 </div>
               </Block>
 
-              <Block label="Results">
-                <div className="grid gap-3 sm:grid-cols-3">
-                  {project.results.map((r) => (
-                    <div
-                      key={r}
-                      className="rounded-xl border border-border bg-surface-2/50 p-3 text-sm text-muted"
-                    >
-                      {r}
-                    </div>
-                  ))}
-                </div>
-              </Block>
-
+              {/* 4 — Tech Stack */}
               <Block label="Tech Stack">
                 <div className="flex flex-wrap gap-2">
                   {project.stack.map((s) => (
@@ -323,6 +274,96 @@ function ProjectModal({
                       {s}
                     </span>
                   ))}
+                </div>
+              </Block>
+
+              {/* 5 — Infrastructure */}
+              <Block label="Infrastructure">
+                <ul className="space-y-1.5">
+                  {project.infrastructure.map((d) => (
+                    <li key={d} className="flex gap-2 text-sm text-muted">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald" />
+                      {d}
+                    </li>
+                  ))}
+                </ul>
+                {project.hosting && (
+                  <p className="mt-3 inline-flex items-center gap-2 rounded-lg border border-amber/30 bg-amber/10 px-3 py-1.5 font-mono text-xs text-amber">
+                    <span className="h-1.5 w-1.5 rounded-full bg-amber" />
+                    {project.hosting.label}
+                  </p>
+                )}
+              </Block>
+
+              {/* 6 — Outcome */}
+              <Block label="Outcome">
+                <div className="grid gap-3 sm:grid-cols-3">
+                  {project.metrics.map((m) => (
+                    <div
+                      key={m.label}
+                      className="rounded-xl border border-border bg-surface-2/50 p-4 text-center"
+                    >
+                      <p className="text-xl font-bold text-gradient-accent">{m.value}</p>
+                      <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-faint">
+                        {m.label}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                <ul className="mt-3 space-y-1.5">
+                  {project.results.map((r) => (
+                    <li key={r} className="flex gap-2 text-sm text-muted">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-2" />
+                      {r}
+                    </li>
+                  ))}
+                </ul>
+              </Block>
+
+              {/* 7 — Links */}
+              <Block label="Links">
+                <div className="flex flex-wrap gap-2">
+                  {project.repo ? (
+                    <a
+                      href={project.repo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface-2/60 px-3 py-2 text-sm text-fg transition-colors hover:border-accent/50 hover:text-accent"
+                    >
+                      <GitHubIcon className="h-4 w-4" /> GitHub
+                    </a>
+                  ) : (
+                    <span className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface-2/40 px-3 py-2 text-sm text-faint">
+                      <Lock className="h-4 w-4" /> Private repo
+                    </span>
+                  )}
+                  {project.repo && (
+                    <a
+                      href={`${project.repo}#readme`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface-2/60 px-3 py-2 text-sm text-muted transition-colors hover:border-accent/50 hover:text-fg"
+                    >
+                      <FileText className="h-4 w-4" /> Documentation
+                    </a>
+                  )}
+                  {project.archHash && (
+                    <button
+                      onClick={() => {
+                        onClose();
+                        setTimeout(
+                          () =>
+                            document
+                              .querySelector("#architecture")
+                              ?.scrollIntoView({ behavior: "smooth" }),
+                          120
+                        );
+                      }}
+                      className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface-2/60 px-3 py-2 text-sm text-muted transition-colors hover:border-accent/50 hover:text-fg"
+                    >
+                      <Cpu className="h-4 w-4" /> Architecture
+                    </button>
+                  )}
                 </div>
               </Block>
             </div>
