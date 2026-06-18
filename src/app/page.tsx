@@ -1,10 +1,14 @@
+import { GitHubProvider } from "@/lib/useGitHub";
 import { Background } from "@/components/ui/Background";
 import { Loader } from "@/components/ui/Loader";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { Navbar } from "@/components/Navbar";
+import { CommandPalette } from "@/components/CommandPalette";
 import { Hero } from "@/components/Hero";
 import { TechMarquee } from "@/components/ui/TechMarquee";
+import { SystemStatus } from "@/components/SystemStatus";
 import { About } from "@/components/About";
+import { Console } from "@/components/Console";
 import { WhatIBuild } from "@/components/WhatIBuild";
 import { Experience } from "@/components/Experience";
 import { Architecture } from "@/components/Architecture";
@@ -18,16 +22,19 @@ import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
-    <>
+    <GitHubProvider>
       <Loader />
       <Background />
       <ScrollProgress />
       <Navbar />
+      <CommandPalette />
 
       <main>
         <Hero />
         <TechMarquee />
+        <SystemStatus />
         <About />
+        <Console />
         <WhatIBuild />
         <Experience />
         <Architecture />
@@ -40,6 +47,6 @@ export default function Home() {
       </main>
 
       <Footer />
-    </>
+    </GitHubProvider>
   );
 }
